@@ -8,6 +8,8 @@
 		"node": "^24.15.0"
 	},
 	"scripts": {
+		"scaffold": "node scripts/scaffold.mjs",
+		"test:scaffold": "node --test scripts/scaffold.test.mjs",
 		"start": "wp-scripts start --blocks-manifest",
 		"typecheck": "tsc --noEmit",
 		"typecheck:watch": "tsc --noEmit --watch",
