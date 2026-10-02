@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "balw-plugin/my-first-block",
+	"version": "0.0.1",
+	"title": "My First Block",
+	"category": "text",
+	"icon": "edit",
+	"description": "A simple block with editable text.",
+	"textdomain": "balw-plugin",
+	"attributes": {
+		"content": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.ts",
+	"editorStyle": "file:./index.css",
+	"script": "file:./script.ts",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.ts",
+	"viewStyle": "file:./view.css",
+	"render": "file:./render.php"
+}

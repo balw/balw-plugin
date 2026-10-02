@@ -1,0 +1,7 @@
+{
+    "intelephense.files.maxSize": 10000000,
+    "intelephense.environment.includePaths": [
+        "vendor/php-stubs/wordpress-stubs",
+        "vendor/wp-phpunit/wp-phpunit/includes"
+    ]
+}

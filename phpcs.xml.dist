@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<ruleset name="Balw Plugin"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpcodesniffer.com/phpcs.xsd">
+	<description>WordPress standards with PSR-4 naming and portable performance checks.</description>
+
+	<file>plugin.php</file>
+	<file>inc/</file>
+	<file>src/</file>
+	<file>tests/</file>
+
+	<!-- Also exclude generated dependencies/assets when paths are passed explicitly. -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/vendor-prefixed/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/dist/*</exclude-pattern>
+
+	<arg value="sp"/>
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg name="cache" value=".phpcs-cache"/>
+	<config name="ignore_warnings_on_exit" value="0"/>
+	<config name="minimum_wp_version" value="7.0"/>
+	<config name="testVersion" value="8.3-"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.PHP.YodaConditions"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+	<rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<rule ref="Generic.PHP.RequireStrictTypes"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- PSR-4 files and PascalCase class names replace WP class-file naming. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>*/inc/*</exclude-pattern>
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="PEAR.NamingConventions.ValidClassName">
+		<exclude-pattern>*/inc/*</exclude-pattern>
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+
+	<!-- Namespaced declarations are already handled correctly by this sniff. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="balw"/>
+				<element value="balw_plugin"/>
+			</property>
+		</properties>
+	</rule>
+	<!-- WordPress includes block templates in a local scope, not global scope. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>*/src/blocks/*/render.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="balw-plugin"/>
+			</property>
+		</properties>
+	</rule>
+	<!-- Core escapes each value before assembling this HTML attribute string. -->
+	<rule ref="WordPress.Security.EscapeOutput">
+		<properties>
+			<property name="customAutoEscapedFunctions" type="array">
+				<element value="get_block_wrapper_attributes"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Select individual VIP sniffs; do not import VIP platform policies. -->
+	<rule ref="WordPressVIPMinimum.Performance.OrderByRand">
+		<type>warning</type>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.OrderByRand.orderby_orderby">
+		<message>Random ordering (%s = %s) can cause expensive database scans. Use a bounded query or a cached selection where appropriate.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.NoPaging">
+		<type>warning</type>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.NoPaging.nopaging_nopaging">
+		<message>Query parameter %s = %s disables pagination. Use bounded results or process records in batches.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.NoPaging.posts_per_page_posts_per_page">
+		<message>Query parameter %s = %s disables pagination. Use bounded results or process records in batches.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.NoPaging.posts_per_page_numberposts">
+		<message>Query parameter %s = %s disables pagination. Use bounded results or process records in batches.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.RegexpCompare">
+		<type>warning</type>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.CacheValueOverride"/>
+	<rule ref="WordPressVIPMinimum.Performance.TaxonomyMetaInOptions"/>
+	<rule ref="WordPressVIPMinimum.Performance.WPQueryParams">
+		<properties>
+			<property name="exclude" type="array">
+				<element value="SuppressFilters"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in">
+		<message>Exclusionary query parameter %s can be expensive for large datasets. Review the excluded IDs and query frequency.</message>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude">
+		<message>Exclusionary query parameter %s can be expensive for large datasets. Review the excluded IDs and query frequency.</message>
+	</rule>
+</ruleset>

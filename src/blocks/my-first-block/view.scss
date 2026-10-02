@@ -1,0 +1,4 @@
+// Frontend-only example: allow long words and URLs to wrap within the block.
+.wp-block-balw-plugin-my-first-block {
+	overflow-wrap: anywhere;
+}

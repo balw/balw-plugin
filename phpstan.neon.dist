@@ -1,0 +1,32 @@
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+	- vendor/johnbillion/wp-compat/extension.neon
+
+parameters:
+	level: 10
+	phpVersion:
+		min: 80300
+		max: 80599
+	# Keep defensive checks for documented (rather than native) type guarantees.
+	treatPhpDocTypesAsCertain: false
+	checkTooWideReturnTypesInProtectedAndPublicMethods: true
+	reportAlwaysTrueInLastCondition: true
+	checkUninitializedProperties: true
+	paths:
+		- plugin.php
+		- inc/
+		- src/
+		- tests/unit/
+	tmpDir: .phpstan-cache
+	excludePaths:
+		analyse:
+			- vendor/*
+			- vendor-prefixed/*
+			- build/*
+			- dist/*
+		analyseAndScan:
+			- node_modules/*
+	WPCompat:
+		pluginFile: plugin.php

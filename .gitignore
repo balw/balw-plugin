@@ -1,0 +1,11 @@
+/vendor/
+/node_modules/
+/build/
+/artifacts/
+*.tsbuildinfo
+/.phpcs-cache
+/.phpstan-cache/
+/.phpunit.cache/
+/.phpunit.result.cache
+/tests/_output/
+/.wp-env.override.json
